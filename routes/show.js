@@ -26,19 +26,19 @@ router.get('/:id/users', async(req, res) => {
     }
 })
 
-
-// router.put('/show/:id/:available', async (req, res) => {
-//     try {
-//         const thisId = req.params.id;
-//         const newerData = req.body;
-//         await Restaurant.update(newerData, {where: {id : thisId} });
-//         const data = await Show.findByPk(thisId);
-//         res.json(data);
-//     } catch {
-//         console.error("This is an error for show .put");
-//     }
-// })
-
+//
+router.put('/show/:id/:available', async (req, res) => {
+    try {
+        const thisId = req.params.id;
+        const newerData = req.body;
+        await Show.update(newerData, {where: {id : thisId} });
+        const data = await Show.findByPk(thisId);
+        res.json(data);
+    } catch {
+        console.error("This is an error for show .put");
+    }
+})
+//
 router.delete('/:id', async (req, res) => {    
     try{
         const data = await Show.findByPk(req.params.id);

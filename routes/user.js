@@ -31,28 +31,18 @@ router.get('/:id/shows', async(req, res) => {
     }
 })
 
-
-router.put('/:id/shows/:id', async (req, res) => {
+//
+router.put('/:userId/shows/:showId', async (req, res) => {
     try {
-        const thisId = req.params.id;
-        const newerData = req.body;
-        await Restaurant.update(newerData, {where: {id : thisId} });
-        const data = await User.findByPk(thisId);
-        res.json(data);
+        const { userId, showId } = req.params;
+        const user = await User.findByPk(userId);      
+        const show = await Show.findByPk(showId);
+        await User.update({ watchedShowId: showId }, {where: {id: userId}});
+        const updatedUser = await User.findByPk(userId, { include: [Show] });
+        res.json(updatedUser);
     } catch {
         console.error("This is an error for user .put");
     }
 })
-
-router.delete('/:id', async (req, res) => {    
-    try{
-        const data = await Show.findByPk(req.params.id);
-        data.destroy()
-        res.json(data);
-        
-    } catch {
-        console.error("This is an error for user .delete.")
-    }
-});
 
 module.exports = router;
