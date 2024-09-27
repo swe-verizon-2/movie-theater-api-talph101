@@ -5,6 +5,7 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
     const shows = await Show.findAll();
+    res.json(shows);
 })
 
 router.get('/:id', async(req, res) => {
@@ -13,14 +14,20 @@ router.get('/:id', async(req, res) => {
     res.json(data);
 })
 
-// app.get('/show:id/users', async(req, res) => {
-//     const id = req.params.id;
-//     const data = await Show.findByPk(id);
-//     res.json(data);
-// })
+router.get('/:id/users', async(req, res) => {
+    try{
+        const id = req.params.id;
+        const data = await Show.findByPk(id);
+        const otherData = await data.getUsers();
+        res.json(data);
+
+    } catch {
+        console.error("This is show .get error for getting users");
+    }
+})
 
 
-// app.put('/show/:id/:available', async (req, res) => {
+// router.put('/show/:id/:available', async (req, res) => {
 //     try {
 //         const thisId = req.params.id;
 //         const newerData = req.body;

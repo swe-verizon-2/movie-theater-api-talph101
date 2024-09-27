@@ -19,17 +19,17 @@ router.get('/:id', async(req, res) => {
 })
 // , {include: Show})
 
-// router.get('/:id/shows', async(req, res) => {
-//     try{
-//         const id = req.params.id;
-//         const data = await User.findByPk(id);
-//         const otherData = await data.getShows();
-//         res.json(otherData);
+router.get('/:id/shows', async(req, res) => {
+    try{
+        const id = req.params.id;
+        const data = await User.findByPk(id);
+        const otherData = await data.getShows();
+        res.json(otherData);
 
-//     } catch {
-//         console.error("Error for .get for both id and shows.")
-//     }
-// })
+    } catch {
+        console.error("Error for .get for both id and shows.");
+    }
+})
 
 
 router.put('/:id/shows/:id', async (req, res) => {
